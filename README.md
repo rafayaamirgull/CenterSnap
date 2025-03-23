@@ -136,7 +136,7 @@ Note than *runner.sh* is equivalent to using *python* to run the script. Additio
 Download a small NOCS Real subset from [[here](https://www.dropbox.com/s/yfenvre5fhx3oda/nocs_test_subset.tar.gz?dl=1)]
 
 ```bash
-./runner.sh inference/inference_real.py @configs/net_config.txt --data_dir path_to_nocs_test_subset --checkpoint checkpoint_path_here
+./runner.sh inference/inference_real.py @configs/net_config.txt --data_dir /media/rafay/Windows-SSD16/other/data/open_source/center_snap/nocs_test_subset --checkpoint /media/rafay/Windows-SSD16/other/data/open_source/center_snap/nocs_test_subset/checkpoint/centersnap_real.ckpt
 ```
 
 You should see the **visualizations** saved in ```results/CenterSnap```. Change the --ouput_path in *config.txt to save them to a different folder
