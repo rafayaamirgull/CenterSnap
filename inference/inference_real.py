@@ -52,7 +52,12 @@ def inference(
       continue
     depth_full_path = img_full_path + '_depth.png'
     img_vis = cv2.imread(color_path)
+    if img_vis.shape[:2] != (480,640):
+      img_vis = cv2.resize(img_vis, (640, 480), interpolation = cv2.INTER_LINEAR)
     left_linear, depth, actual_depth = load_img_NOCS(color_path, depth_full_path)
+    if left_linear.shape[:2] != (480,640):
+      left_linear = cv2.resize(left_linear, (640, 480), interpolation = cv2.INTER_LINEAR)
+      depth = cv2.resize(depth, (640, 480), interpolation = cv2.INTER_LINEAR)
     input = create_input_norm(left_linear, depth)
     input = input[None, :, :, :]
     if use_gpu:
