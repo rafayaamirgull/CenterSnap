@@ -7,6 +7,8 @@ import torch.nn.functional as F
 import open3d as o3d
 import matplotlib.pyplot as plt
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 import time
 import pytorch_lightning as pl
 import _pickle as cPickle
@@ -19,6 +21,7 @@ from utils.viz_utils import depth2inv, viz_inv_depth
 from utils.transform_utils import get_gt_pointclouds, transform_coordinates_3d, calculate_2d_projections
 from utils.transform_utils import project
 from utils.viz_utils import save_projected_points, draw_bboxes, line_set_mesh
+from simnet.lib import transform
 
 import time
 def get_auto_encoder(model_path):
@@ -88,6 +91,24 @@ def inference(
     points_2d = []
     box_obb = []
     axes = []
+
+    # if i >= 4:
+    #   _CAMERA.f_x = 611.03066846
+    #   _CAMERA.f_y = 609.2503304
+    #   _CAMERA.c_x = 345.46594134
+    #   _CAMERA.c_y = 245.81101883
+    #   # _CAMERA.RT_matrix = transform.Transform.from_aa(axis=transform.X_AXIS,
+    #   #                                            angle_deg=180.0).matrix
+    #   # _CAMERA.RT_matrix = np.array([[1.00000000e+00, -1.11406977e-12, 1.31960818e-12, 0.0000000e+00], [1.11406977e-12, 1.00000000e+00, -1.36776934e-12, 0.0000000e+00], [-1.31960818e-12, 1.36776934e-12,  1.00000000e+00, 0.0000000e+00], [0.0000000e+00, 0.0000000e+00, 0.0000000e+00, 1.0000000e+00]])
+    #   _CAMERA.RT_matrix = np.array([[1.00000000e+00, -8.68334627e-14, 6.39445599e-14, 0.0000000e+00], [8.68334627e-14, 1.00000000e+00, -1.57748866e-13, 0.0000000e+00], [-6.39445599e-14, 1.57748866e-13,  1.00000000e+00, 0.0000000e+00], [0.0000000e+00, 0.0000000e+00, 0.0000000e+00, 1.0000000e+00]])
+
+    #   _CAMERA._set_intrinsics(
+    #     np.array([
+    #         [_CAMERA.f_x, 0., _CAMERA.c_x, 0.0],
+    #         [0., _CAMERA.f_y, _CAMERA.c_y, 0.0],
+    #         [0., 0., 1., 0.0],
+    #         [0., 0., 0., 1.],
+    #     ]))
 
     for j in range(len(latent_emb_outputs)):
         emb = latent_emb_outputs[j]
